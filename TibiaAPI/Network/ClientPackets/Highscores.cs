@@ -9,6 +9,8 @@ namespace OXGaming.TibiaAPI.Network.ClientPackets
         public uint VocationId { get; set; }
 
         public byte CategoryId { get; set; }
+        public byte WorldCategory { get; set; }
+        public byte WorldType { get; set; }
 
         public Highscores(Client client)
         {
