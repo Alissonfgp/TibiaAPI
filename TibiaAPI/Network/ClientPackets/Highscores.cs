@@ -21,6 +21,11 @@ namespace OXGaming.TibiaAPI.Network.ClientPackets
             // TODO
             message.ReadByte(); // 00
             CategoryId = message.ReadByte();
+            if (Client.VersionNumber >= 126010468)
+            {
+                WorldCategory = message.ReadByte();
+                WorldType = message.ReadByte(); //battle eye
+            }
             VocationId = message.ReadUInt32();
             GameWorld = message.ReadString();
             message.ReadBytes(3); // 01 00 14

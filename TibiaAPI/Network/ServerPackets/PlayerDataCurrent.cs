@@ -31,6 +31,8 @@ namespace OXGaming.TibiaAPI.Network.ServerPackets
         public byte MagicLevelPercent { get; set; }
         public byte Soul { get; set; }
         public bool CanBuyMoreStoreXpBoosts { get; set; }
+        public ushort RemainingManaShield { get; set; }
+        public ushort MaxManaShield { get; set; }
 
         public PlayerDataCurrent(Client client)
         {
@@ -73,6 +75,11 @@ namespace OXGaming.TibiaAPI.Network.ServerPackets
             OfflineTrainingTime = message.ReadUInt16();
             RemainingStoreXpBoostSeconds = message.ReadUInt16();
             CanBuyMoreStoreXpBoosts = message.ReadBool();
+            if (Client.VersionNumber >= 126010468)
+            {
+                RemainingManaShield = message.ReadUInt16();
+                MaxManaShield = message.ReadUInt16();
+            }
         }
 
         public override void AppendToNetworkMessage(NetworkMessage message)
@@ -111,6 +118,11 @@ namespace OXGaming.TibiaAPI.Network.ServerPackets
             message.Write(OfflineTrainingTime);
             message.Write(RemainingStoreXpBoostSeconds);
             message.Write(CanBuyMoreStoreXpBoosts);
+            if (Client.VersionNumber >= 126010468)
+            {
+                message.Write(RemainingManaShield);
+                message.Write(MaxManaShield);
+            }
         }
     }
 }

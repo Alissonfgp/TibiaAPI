@@ -15,7 +15,7 @@ namespace OXGaming.TibiaAPI.Network.ServerPackets
 
         public bool HasPremium { get; set; }
         public bool HasReachedMain { get; set; }
-
+        public bool activeManaShieldBar { get; set; }
         public PlayerDataBasic(Client client)
         {
             Client = client;
@@ -34,6 +34,11 @@ namespace OXGaming.TibiaAPI.Network.ServerPackets
             {
                 KnownSpells.Add(message.ReadByte());
             }
+
+            if (Client.VersionNumber >= 126010468)
+            {
+                activeManaShieldBar = message.ReadBool();
+            }
         }
 
         public override void AppendToNetworkMessage(NetworkMessage message)
@@ -49,6 +54,11 @@ namespace OXGaming.TibiaAPI.Network.ServerPackets
             for (var i = 0; i < count; ++i)
             {
                 message.Write(KnownSpells[i]);
+            }
+
+            if (Client.VersionNumber >= 126010468)
+            {
+                message.Write(activeManaShieldBar);
             }
         }
     }

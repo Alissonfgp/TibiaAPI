@@ -14,6 +14,12 @@ namespace OXGaming.TibiaAPI.Network.ClientPackets
         public byte HeadColor { get; set; }
         public byte LegsColor { get; set; }
         public byte TorsoColor { get; set; }
+        public byte MountDetailColor { get; set; }
+        public byte MountHeadColor { get; set; }
+        public byte MountLegsColor { get; set; }
+        public byte MountTorsoColor { get; set; }
+
+        public ushort FamiliarLook { get; set; }
 
         public SetOutfit(Client client)
         {
@@ -35,6 +41,14 @@ namespace OXGaming.TibiaAPI.Network.ClientPackets
             DetailColor = message.ReadByte();
             Addons = message.ReadByte();
             MountId = message.ReadUInt16();
+            if (Client.VersionNumber >= 126010468)
+            {
+                MountHeadColor = message.ReadByte();
+                MountTorsoColor = message.ReadByte();
+                MountLegsColor = message.ReadByte();
+                MountDetailColor = message.ReadByte();
+                FamiliarLook = message.ReadUInt16();
+            }
         }
 
         public override void AppendToNetworkMessage(NetworkMessage message)
@@ -50,6 +64,14 @@ namespace OXGaming.TibiaAPI.Network.ClientPackets
             message.Write(LegsColor);
             message.Write(DetailColor);
             message.Write(MountId);
+            if (Client.VersionNumber >= 126010468)
+            {
+                message.Write(MountHeadColor);
+                message.Write(MountTorsoColor);
+                message.Write(MountLegsColor);
+                message.Write(MountDetailColor);
+                message.Write(FamiliarLook);
+            }
         }
     }
 }

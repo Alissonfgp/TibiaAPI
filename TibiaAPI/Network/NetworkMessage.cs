@@ -360,7 +360,7 @@ namespace OXGaming.TibiaAPI.Network
                 }
             }
 
-            if (objectType.FrameGroup[0].SpriteInfo.Animation != null)
+            if (_client.VersionNumber < 125110323 && objectType.FrameGroup[0].SpriteInfo.Animation != null)
             {
                 objectInstance.Phase = ReadByte();
             }
@@ -1012,7 +1012,7 @@ namespace OXGaming.TibiaAPI.Network
                 }
             }
 
-            if (value.Type.FrameGroup[0].SpriteInfo.Animation != null)
+            if (_client.VersionNumber < 125110323 && value.Type.FrameGroup[0].SpriteInfo.Animation != null)
             {
                 Write(value.Phase);
             }
